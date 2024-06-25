@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Charging Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+        }
+
+        .charging-container {
+            position: relative;
+            width: 200px;
+            height: 400px;
+        }
+
+        #charging-animation {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="charging-container">
+        <video id="charging-animation" autoplay loop muted playsinline>
+            <source src="Projekt-bez-nazwy-unscreen.gif" type="video/gif">
+        </video>
+    </div>
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const animationElement = document.getElementById("charging-animation");
+
+            function updateAnimation() {
+                animationElement.style.opacity = Math.abs(Math.sin(Date.now() / 1000));
+                requestAnimationFrame(updateAnimation);
+            }
+
+            updateAnimation();
+        });
+         // Service worker registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
